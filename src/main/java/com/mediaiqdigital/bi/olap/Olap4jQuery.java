@@ -1,4 +1,4 @@
-package demo;
+package com.mediaiqdigital.bi.olap;
 
 import org.olap4j.CellSet;
 import org.olap4j.OlapConnection;

@@ -1,6 +1,7 @@
 package demo;
 
 import mondrian.olap.CellProperty;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,8 @@ import org.olap4j.*;
 import org.olap4j.layout.CellSetFormatter;
 import org.olap4j.layout.RectangularCellSetFormatter;
 import org.olap4j.metadata.*;
+
+import com.mediaiqdigital.bi.olap.Olap4jQuery;
 
 import java.io.PrintWriter;
 import java.sql.ResultSet;

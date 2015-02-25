@@ -1,0 +1,11 @@
+olap:
+  db:
+    jdbc:
+      url: jdbc:mysql://localhost:3306/political_dw
+    username: root
+    password: root
+    driver: com.mysql.jdbc.Driver
+  schema:
+    file: ./src/main/resources/political_dw.mondrian.xml
+management:
+  context-path: /manage

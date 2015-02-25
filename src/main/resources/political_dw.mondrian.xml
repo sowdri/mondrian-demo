@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<Schema name="Political DataWarehouse" metamodelVersion="4.0" measuresCaption="Measures" missingLink="warning">
+  <PhysicalSchema>
+    <Table name="date_dim">
+      <Key>
+        <Column name="date_key"/>
+      </Key>
+    </Table>
+    <Table name="geo_dim">
+      <Key>
+        <Column name="geo_key"/>
+      </Key>
+    </Table>
+    <Table name="population_fact">
+      <Key>
+        <Column name="fact_key"/>
+      </Key>
+    </Table>   
+  </PhysicalSchema>
+  <Dimension name="Date" table="date_dim" key="date_key">
+    <Attributes>
+      <Attribute name="date_key" keyColumn="date_key"/>
+      <Attribute name="year" keyColumn="year"/>      
+    </Attributes>   
+  </Dimension>
+  <Dimension name="Geo" table="geo_dim" key="geo_key">
+    <Attributes>
+      <Attribute name="geo_key" keyColumn="geo_key"/>
+      <Attribute name="country" keyColumn="country"/>
+      <Attribute name="state" hasHierarchy="true">
+        <Key>
+          <Column name="country"/>
+          <Column name="state"/>
+        </Key>
+        <Name>
+          <Column name="state"/>
+        </Name>
+      </Attribute>
+      <Attribute name="city" hasHierarchy="true">
+        <Key>
+          <Column name="country"/>
+          <Column name="state"/>
+          <Column name="city"/>
+        </Key>
+        <Name>
+          <Column name="city"/>
+        </Name>
+      </Attribute>      
+    </Attributes>
+    <Hierarchies>
+      <Hierarchy name="Geo" hasAll="true">
+        <Level attribute="country"/>
+        <Level attribute="state"/>
+        <Level attribute="city"/>
+      </Hierarchy>
+    </Hierarchies>
+  </Dimension>  
+  <Cube name="population">
+    <Dimensions>
+      <Dimension source="Date"/>
+      <Dimension source="Geo"/>      
+    </Dimensions>
+    <MeasureGroups>
+      <MeasureGroup name="population" table="population_fact">
+        <Measures>
+          <Measure name="population" column="population" aggregator="sum" formatString="#,###"/>          
+        </Measures>
+        <DimensionLinks>
+          <ForeignKeyLink dimension="Date" foreignKeyColumn="date_key"/>
+          <ForeignKeyLink dimension="Geo" foreignKeyColumn="geo_key"/>
+        </DimensionLinks>
+      </MeasureGroup>
+    </MeasureGroups>   
+  </Cube>
+</Schema>
